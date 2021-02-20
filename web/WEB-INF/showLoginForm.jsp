@@ -9,18 +9,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Добавить покупателя</title>
+        <title>Вход в аккаунт</title>
     </head>
     <body>
-        <h1>Добавить покупателя</h1>
+        <h1>Вход в аккаунт</h1>
         <p>${info}</p>
-        <form action="createConsumer" method="POST" autocomplete="off">
-            Имя: <input type="text" name="firstname" value="${firstname}"><br>
-            Фамилия: <input type="text" name="lastname" value="${lastname}"><br>
-            Деньги: <input type="text" name="cash" value="${cash}"><br>
+        <form action="login" method="POST" autocomplete="off">
             Логин: <input type="text" name="login" value="${login}"><br>
             Пароль: <input type="password" name="password" value=""><br>
-            <input type="submit" value="добавить">
+            <input type="submit" value="Войти">
         </form>
     </body>
 </html>
