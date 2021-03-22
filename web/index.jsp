@@ -16,7 +16,7 @@
                                                     <div class="card-body">
                                                           <h5 class="card-title">${product.name}</h5>
                                                           <p class="card-text">
-                                                          <form action="buyProduct" method="POST">    
+                                                          <form id="1" action="buyProduct" method="POST">    
                                                                 Цена: ${product.price}$
                                                                 Количество: ${product.quantity}
                                                                 Видеокарта: ${product.videocard}
@@ -24,7 +24,10 @@
                                                                 Оперативная память: ${product.ram}
                                                                 <input class="d-none" type="text" name="productId" value="${product.id}">
                                                           </p>
-                                                          <input type="submit" class="btn btn-primary" value="Купить">
+                                                          <div class="d-flex justify-content-between">
+                                                          <input type="submit" name="form1" class="btn btn-primary" value="Купить">
+                                                          
+                                                          </div>
                                                       </div>
                                                   </div>
                                             </form>

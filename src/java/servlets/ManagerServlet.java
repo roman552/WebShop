@@ -28,6 +28,9 @@ import session.ProductFacade;
 @WebServlet(name = "ManagerServlet", urlPatterns = {
     "/addProduct",
     "/createProduct",
+    "/editProduct",
+    "/editProductForm",
+    "/editList",
 })
 public class ManagerServlet extends HttpServlet {
     @EJB
@@ -98,7 +101,62 @@ public class ManagerServlet extends HttpServlet {
                 request.setAttribute("info","Добавлен товар: " +product.toString() );
                 request.getRequestDispatcher("/main").forward(request, response);
                 break;
+              
+            case "/editList":
+                List<Product> listProducts = productFacade.findAll();
+                request.setAttribute("listProducts", listProducts);
+                request.getRequestDispatcher("/WEB-INF/editList.jsp").forward(request, response);
+                break;
                 
+            case "/editProductForm":
+                String productId = request.getParameter("productId");
+                product = productFacade.find(Long.parseLong(productId));
+                request.setAttribute("name",product.getName());
+                request.setAttribute("price",product.getPrice());
+                request.setAttribute("quantity",product.getQuantity());
+                request.setAttribute("videocard",product.getVideocard());
+                request.setAttribute("ram",product.getRam());
+                request.setAttribute("cpu",product.getCpu());
+                request.setAttribute("productId",productId);
+                request.getRequestDispatcher("/WEB-INF/editProduct.jsp").forward(request, response);
+                break;
+            
+            case "/editProduct":  
+                name = request.getParameter("name");
+                price = request.getParameter("price");
+                quantity = request.getParameter("quantity");
+                videocard = request.getParameter("videocard");
+                ram = request.getParameter("ram");
+                cpu = request.getParameter("cpu");
+                productId = request.getParameter("productId");
+                product = productFacade.find(Long.parseLong(productId));
+                if("".equals(name) || name == null 
+                        || "".equals(videocard) || videocard == null
+                        || "".equals(ram) || ram == null
+                        || "".equals(price) || price == null
+                        || "".equals(cpu) || cpu == null
+                        || "".equals(quantity) || quantity == null){
+                    request.setAttribute("info","Заполните все поля формы");
+                    request.setAttribute("name",name);
+                    request.setAttribute("price",price);
+                    request.setAttribute("quantity",quantity);
+                    request.setAttribute("videocard",videocard);
+                    request.setAttribute("ram",ram);
+                    request.setAttribute("cpu",cpu);
+                    request.getRequestDispatcher("/editProductForm").forward(request, response);
+                    break; 
+                }
+                product.setName(name);
+                product.setPrice(Integer.parseInt(price));
+                product.setQuantity(Integer.parseInt(quantity));
+                product.setVideocard(videocard);
+                product.setRam(ram);
+                product.setCpu(cpu);
+                
+                productFacade.edit(product);
+                request.setAttribute("info", "Данные о компьютере изменены");
+                request.getRequestDispatcher("/main").forward(request, response);
+                break;
         
         }        
     }

@@ -75,6 +75,30 @@
                     transform: scaleX(1.05)
                     
                 }
+                
+                .more1 {
+        		position: absolute; 
+        		padding: 15px; 
+        		left: 0; top: 0;
+        		width: 120px;
+        		background-color: #E1E1E1; 
+        		border-radius: 20px;
+        		display: none;
+                        z-index: 2;
+                        
+        	}
+
+        	a {
+        		color: black;
+        	}
+
+
+        	.more:hover .more1{
+        		display: flex;
+                        justify-content: center;
+                        align-items: center 
+
+        	}
         </style>
     </head>
     <body>
@@ -108,6 +132,7 @@
                                 <ul class="list-unstyled">
                                     <a href='addMoneyToConsumer'><li>Пополнить баланс</li></a>
                                     <a href='addProduct' class="<c:if test="${role == 'CONSUMER'}">d-none</c:if>"><li>Добавить товар</li></a>
+                                    <a href='editList' class="<c:if test="${role == 'CONSUMER'}">d-none</c:if>"><li>Изменить товар</li></a>
                                     <a href='listConsumers' class="<c:if test="${role == 'CONSUMER' || role == 'MANAGER'}">d-none</c:if>"><li>Список покупателей</li></a>
                                     <a href='adminPanel' class="<c:if test="${role == 'CONSUMER' || role == 'MANAGER'}">d-none</c:if>"><li>Панель администратора</li></a>
                                     <a href='logout'><li>Выйти</li></a>
