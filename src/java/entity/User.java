@@ -27,21 +27,23 @@ public class User implements Serializable, EntityInterface{
     private String password;
     @OneToOne
     private Consumer consumer;
+    private UserRole role;
 
     public User() {
     }
 
-    public User(String login, String password, Consumer consumer) {
+    public User(String login, String password, Consumer consumer, UserRole role) {
         this.login = login;
         this.password = password;
         this.consumer = consumer;
+        this.role = role;
     }
 
-    public Consumer getReader() {
+    public Consumer getUser() {
         return consumer;
     }
 
-    public void setReader(Consumer consumer) {
+    public void setUser(Consumer consumer) {
         this.consumer = consumer;
     }
 
@@ -61,6 +63,16 @@ public class User implements Serializable, EntityInterface{
         this.password = password;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "User{" 
@@ -68,6 +80,7 @@ public class User implements Serializable, EntityInterface{
                 + ", password=" + password 
                 + ", reader=" + consumer.getFirstName()
                 + " " + consumer.getLastName()
+                + ", role=" + role
                 + '}';
     }
 

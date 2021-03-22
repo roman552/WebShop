@@ -5,8 +5,8 @@
  */
 package session;
 
-import entity.User;
 import entity.UserRole;
+import entity.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author A
  */
 @Stateless
-public class UserFacade extends AbstractFacade<User> {
+public class RoleFacade extends AbstractFacade<UserRole> {
 
     @PersistenceContext(unitName = "SPTVR19WebShopPU")
     private EntityManager em;
@@ -26,20 +26,20 @@ public class UserFacade extends AbstractFacade<User> {
         return em;
     }
 
-    public UserFacade() {
-        super(User.class);
+    public RoleFacade() {
+        super(UserRole.class);
     }
     
-    public User findByLogin(String login) {
+    public UserRole findByName(String roleName) {
         try {
-            return (User) em.createQuery("SELECT u FROM User u WHERE u.login = :login")
-                    .setParameter("login", login)
+            return (UserRole) em.createQuery("SELECT role FROM UserRole role WHERE role.roleName = :roleName")
+                    .setParameter("roleName", roleName)
                     .getSingleResult();
         } catch (Exception e) {
             return null;
         }
     }
+
     
-   
     
 }

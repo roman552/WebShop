@@ -5,15 +5,29 @@
 --%>
 
 
-        <h1>Магазин компьютеров</h1>
-        <p>${info}</p>
-        <a href="showLoginForm">Вход</a><br>  
-        <a href="logout">Выход</a><br>  
-        <a href="addProduct">Добавить компьютер</a><br>  
-        <a href="addConsumer">Регистрация пользователя</a><br>  
-        <a href="listProducts">Список компьютеров</a><br>  
-        <a href="listConsumers">Список покупателей</a><br>  
-        <a href="buyProductForm">Купить компьютер</a><br>  
-        <a href="addMoneyToConsumer">Пополнить кошелек покупателя</a><br>  
-    </body>
-</html>
+        <h1>Список компьютеров</h1>
+                        <hr>
+                                    <div class="row">
+                                        <c:forEach var="product" items="${listProducts}">
+                                        <div class="col-4 mt-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="..." class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                      <h5 class="card-title">${product.name}</h5>
+                                                      <p class="card-text">
+                                                            Цена: ${product.price}$
+                                                            Количество: ${product.quantity}
+                                                            Видеокарта: ${product.videocard}
+                                                            CPU: ${product.cpu}
+                                                            Оперативная память: ${product.ram}
+                                                      </p>
+                                                      <a href="#" class="btn btn-primary">Купить</a>
+                                                  </div>
+                                              </div>
+                                        </div>
+                                    </c:forEach>
+                                    </div>          
+                    </div>
+                </div>	
+            </div>
+        </main>

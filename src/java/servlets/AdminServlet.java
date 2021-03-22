@@ -6,8 +6,8 @@
 package servlets;
 
 import entity.Consumer;
-import entity.Product;
 import entity.User;
+import entity.UserRole;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,21 +19,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.ConsumerFacade;
-import session.ProductFacade;
+import session.RoleFacade;
+import session.UserFacade;
 
 /**
  *
  * @author A
  */
-@WebServlet(name = "ManagerServlet", urlPatterns = {
-    "/addProduct",
-    "/createProduct",
+@WebServlet(name = "AdminServlet", urlPatterns = {
+    "/listConsumers",
+    "/setRoleToUser",
+    "/adminPanel"
 })
-public class ManagerServlet extends HttpServlet {
+public class AdminServlet extends HttpServlet {
     @EJB
-    private ProductFacade productFacade;
+    ConsumerFacade consumerFacade;
     @EJB
-    private ConsumerFacade consumerFacade;
+    UserFacade userFacade;
+    @EJB
+    RoleFacade roleFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,61 +50,63 @@ public class ManagerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession(false);
-        if (session == null) {
+        
+        if(session == null){
             request.getRequestDispatcher("/WEB-INF/showLoginForm.jsp").forward(request, response);
             request.setAttribute("info", "Войдите в систему");
             return;
         }
         User user = (User) session.getAttribute("user");
-        if (user==null) {
+        if(user == null){
             request.getRequestDispatcher("/WEB-INF/showLoginForm.jsp").forward(request, response);
             request.setAttribute("info", "Войдите в систему");
             return;
         }
         
-        if (!"MANAGER".equals(user.getRole().getRoleName()) && !"ADMIN".equals(user.getRole().getRoleName())) {
+        if (!"ADMIN".equals(user.getRole().getRoleName())) {
             request.getRequestDispatcher("/WEB-INF/showLoginForm.jsp").forward(request, response);
             request.setAttribute("info", "Войдите в систему");
             return;
         }
+        
         String path = request.getServletPath();
-        switch(path){
-            case "/addProduct":
-                    request.getRequestDispatcher("/WEB-INF/addProduct.jsp").forward(request, response);
-                    break;
-            case "/createProduct":
-                String name = request.getParameter("name");
-                String price = request.getParameter("price");
-                String quantity = request.getParameter("quantity");
-                String videocard = request.getParameter("videocard");
-                String ram = request.getParameter("ram");
-                String cpu = request.getParameter("cpu");
-                if("".equals(name) || name == null 
-                        || "".equals(videocard) || videocard == null
-                        || "".equals(ram) || ram == null
-                        || "".equals(price) || price == null
-                        || "".equals(cpu) || cpu == null
-                        || "".equals(quantity) || quantity == null){
+        
+        switch(path) {
+            case "/listConsumers":
+                List<Consumer> consumers = consumerFacade.findAll();
+                request.setAttribute("listConsumers", consumers);
+                request.getRequestDispatcher("/WEB-INF/listConsumers.jsp").forward(request, response);
+                break;
+            case "/adminPanel":
+                List<User> users = userFacade.findAll();
+                request.setAttribute("listUsers", users);
+                List<UserRole> roles = roleFacade.findAll();
+                request.setAttribute("listRoles", roles);
+                request.getRequestDispatcher("/WEB-INF/adminPanel.jsp").forward(request, response);
+                break;
+            case "/setRoleToUser":
+                String userId = request.getParameter("userId");
+                String roleId = request.getParameter("roleId");
+                
+                if("".equals(userId) || userId == null 
+                        || "".equals(roleId) || roleId == null) {
                     request.setAttribute("info","Заполните все поля формы");
-                    request.setAttribute("name",name);
-                    request.setAttribute("price",price);
-                    request.setAttribute("quantity",quantity);
-                    request.setAttribute("videocard",videocard);
-                    request.setAttribute("ram",ram);
-                    request.setAttribute("cpu",cpu);
-                    request.getRequestDispatcher("/addProduct").forward(request, response);
-                    break; 
+                    request.getRequestDispatcher("/WEB-INF/adminPanel.jsp").forward(request, response);
                 }
-                Product product = new Product(name, Integer.parseInt(price), Integer.parseInt(quantity), videocard, ram, cpu);
-                productFacade.create(product);
-                request.setAttribute("info","Добавлен товар: " +product.toString() );
+                
+                user = userFacade.find(Long.parseLong(userId));
+                UserRole role = roleFacade.find(Long.parseLong(roleId));
+                
+                
+                
+                user.setRole(role);
+                userFacade.edit(user);
+                
+                request.setAttribute("info","Роль изменена");
                 request.getRequestDispatcher("/main").forward(request, response);
                 break;
-                
-        
-        }        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -122,28 +122,44 @@ public class UserServlet extends HttpServlet {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
                 break;
             case "/addMoneyToConsumer":
-                listConsumers = consumerFacade.findAll();
-                request.setAttribute("listConsumers", listConsumers);
+//                listConsumers = consumerFacade.findAll();
+//                request.setAttribute("listConsumers", listConsumers);
+                User userData = (User) session.getAttribute("user");
+                int cash = (int) session.getAttribute("cash");
+                String role = (String) session.getAttribute("role");
+                request.setAttribute("name", userData.getUser().getFirstName() +" "+ userData.getUser().getLastName());
+                request.setAttribute("cash",cash); 
+                request.setAttribute("id", userData.getUser().getId()); 
+                request.setAttribute("role", role);
+                
+                
                 request.getRequestDispatcher("/WEB-INF/addMoneyToConsumer.jsp").forward(request, response);
                 break;
             case "/addMoney":
-                String money = request.getParameter("money");
-                consumerId = request.getParameter("consumerId");
-                if(consumerId == null || "".equals(consumerId) || money == null || "".equals(money)){
-                    
+                  String money = request.getParameter("money");
+                  consumerId = request.getParameter("id");
+                  if(consumerId == null || "".equals(consumerId) || money == null || "".equals(money)){
                     request.setAttribute("info", "Заполните все поля");
-                    listConsumers = consumerFacade.findAll();
-                    request.setAttribute("listConsumers", listConsumers);
+                    userData = (User) session.getAttribute("user");
+                    cash = (int) session.getAttribute("cash");
+                    request.setAttribute("name", userData.getUser().getFirstName() +" "+ userData.getUser().getLastName());
+                    request.setAttribute("cash",cash); 
+                    request.setAttribute("id", userData.getUser().getId()); 
                     request.getRequestDispatcher("/WEB-INF/addMoneyToConsumer.jsp").forward(request, response);
                     break;
-                }
+                  }
                 consumer = consumerFacade.find(Long.parseLong(consumerId));
                 
                 consumer.setCash(consumer.getCash()+Integer.parseInt(money));
                 consumerFacade.edit(consumer);
+                session.setAttribute("cash", consumer.getCash());
                 request.setAttribute("info", "Пополнен кошелек");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-                break;
+//                request.getRequestDispatcher("index.jsp").forward(request, response);
+//                break;
+                  
+                  
+                  request.getRequestDispatcher("/main").forward(request, response);
+                  break;
         }   
     }
 

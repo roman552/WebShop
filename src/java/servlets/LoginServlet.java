@@ -7,6 +7,7 @@ package servlets;
 
 import entity.Consumer;
 import entity.Product;
+import entity.UserRole;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.ConsumerFacade;
 import session.ProductFacade;
+import session.RoleFacade;
 import session.UserFacade;
 
 /**
@@ -31,16 +33,20 @@ import session.UserFacade;
     "/login",
     "/addConsumer",
     "/createConsumer",
-    "/listProducts",
+    "/main",
+    "/",
     "/logout"
 })
 public class LoginServlet extends HttpServlet {
     @EJB
-    UserFacade userFacade;
+    private UserFacade userFacade;
     @EJB 
     private ConsumerFacade consumerFacade;
     @EJB 
     private ProductFacade productFacade;
+    @EJB 
+    private RoleFacade roleFacade;
+    HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -56,6 +62,22 @@ public class LoginServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String path = request.getServletPath();
         
+        if (roleFacade.findAll().isEmpty()) {
+            UserRole consumerRole = new UserRole("CONSUMER");
+            UserRole managerRole = new UserRole("MANAGER");
+            UserRole adminRole = new UserRole("ADMIN");
+            
+            roleFacade.create(consumerRole);
+            roleFacade.create(managerRole);
+            roleFacade.create(adminRole);
+            
+            Consumer consumer = new Consumer("Roman", "Ivanov", 0);
+            consumerFacade.create(consumer);
+            
+            User user = new User("admin", "admin", consumer, adminRole);
+            userFacade.create(user);
+        }
+        
         switch(path){
             case "/showLoginForm":
                 request.getRequestDispatcher("/WEB-INF/showLoginForm.jsp").forward(request, response);
@@ -68,20 +90,24 @@ public class LoginServlet extends HttpServlet {
                 
                 if (user==null) {
                     request.setAttribute("info", "Нет такого пользователя или неправильный пароль");
-                    request.getRequestDispatcher("/showLoginForm").forward(request, response);
+                    request.getRequestDispatcher("/main").forward(request, response);
                     break;
                 }
                 
                 if (!password.equals(user.getPassword())) {
                     request.setAttribute("info", "Нет такого пользователя или неправильный пароль");
-                    request.getRequestDispatcher("/showLoginForm").forward(request, response);
+                    request.getRequestDispatcher("/main").forward(request, response);
                     break;
                 }
                 
-                HttpSession session = request.getSession(true);
-                session.setAttribute("user", user);                            
-                request.setAttribute("info", "Вы вошли!");
-                request.getRequestDispatcher("index.jsp").forward(request, response);;
+                session = request.getSession(true);
+                session.setAttribute("user", user);   
+                session.setAttribute("login", user.getLogin()); 
+                session.setAttribute("cash", user.getUser().getCash()); 
+                session.setAttribute("role", user.getRole().getRoleName()); 
+                request.setAttribute("login", user.getLogin());
+                request.setAttribute("cash", user.getUser().getCash());
+                request.getRequestDispatcher("/main").forward(request, response);
                 break;
                 
             case "/logout":
@@ -90,7 +116,7 @@ public class LoginServlet extends HttpServlet {
                     session.invalidate();
                 }
                 request.setAttribute("info", "Вы вышли :3");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("/").forward(request, response);
                 break; 
                 
             case "/addConsumer":
@@ -117,16 +143,41 @@ public class LoginServlet extends HttpServlet {
                 }
                 Consumer consumer = new Consumer(firstname, lastname, Integer.parseInt(cash));
                 consumerFacade.create(consumer);
-                user = new User(login, password, consumer);
+                UserRole userRole = roleFacade.findByName("CONSUMER");
+                
+                user = new User(login, password, consumer, userRole);
                 userFacade.create(user);
-                request.setAttribute("info","Добавлен покупатель: " +consumer.toString() );
+                request.setAttribute("info","Регистрация завершина");
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
                 break;
-            case "/listProducts":
+            case "/main":
                 List<Product> listProducts = productFacade.findAll();
                 request.setAttribute("listProducts", listProducts);
-                request.getRequestDispatcher("/WEB-INF/listProducts.jsp").forward(request, response);
-                break;    
+                
+                
+                
+                try {
+                    if (session != null) {   
+                        User userData = (User) session.getAttribute("user");
+                        int money = (int) session.getAttribute("cash");
+                        String role = (String) session.getAttribute("role");
+                        request.setAttribute("login", userData.getLogin());
+                        request.setAttribute("cash", money);
+                        request.setAttribute("role", role);
+                        
+                    } 
+                    
+                } catch (Exception e) {
+                }
+                
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+                break;
+            case "/":
+                listProducts = productFacade.findAll();
+                request.setAttribute("listProducts", listProducts); 
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+                break;        
+                
         }
     }
 
