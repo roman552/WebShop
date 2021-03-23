@@ -34,7 +34,7 @@ import session.UserFacade;
     "/addConsumer",
     "/createConsumer",
     "/main",
-    "/",
+    "",
     "/logout"
 })
 public class LoginServlet extends HttpServlet {
@@ -172,7 +172,7 @@ public class LoginServlet extends HttpServlet {
                 
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
-            case "/":
+            case "":
                 listProducts = productFacade.findAll();
                 request.setAttribute("listProducts", listProducts); 
                 request.getRequestDispatcher("index.jsp").forward(request, response);

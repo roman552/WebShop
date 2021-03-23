@@ -12,7 +12,7 @@
                                         <c:forEach var="product" items="${listProducts}">
                                         <div class="col-4 mt-3">
                                                 <div class="card" style="width: 18rem;">
-                                                    <img src="..." class="card-img-top" alt="...">
+                                                    <img src="insertFile/${product.cover.path}" class="card-img-top" alt="...">
                                                     <div class="card-body">
                                                           <h5 class="card-title">${product.name}</h5>
                                                           <p class="card-text">
@@ -25,7 +25,7 @@
                                                                 <input class="d-none" type="text" name="productId" value="${product.id}">
                                                           </p>
                                                           <div class="d-flex justify-content-between">
-                                                          <input type="submit" name="form1" class="btn btn-primary" value="Купить">
+                                                              <input type="submit" name="form1" class="btn btn-primary" value="Купить">
                                                           
                                                           </div>
                                                       </div>

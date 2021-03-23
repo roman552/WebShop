@@ -27,17 +27,27 @@ public class Product implements Serializable, EntityInterface{
     private String cpu; 
     private Integer price; 
     private Integer quantity; 
+    private Cover cover;
     
     public Product(){
     }
 
-    public Product(String name, Integer price, Integer quantity, String videocard, String ram, String cpu) {
+    public Product(String name, Integer price, Integer quantity, String videocard, String ram, String cpu, Cover cover) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.videocard = videocard;
         this.ram = ram;
         this.cpu = cpu;
+        this.cover = cover;
+    }
+
+    public Cover getCover() {
+        return cover;
+    }
+
+    public void setCover(Cover cover) {
+        this.cover = cover;
     }
     
     

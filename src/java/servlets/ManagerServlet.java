@@ -6,6 +6,7 @@
 package servlets;
 
 import entity.Consumer;
+import entity.Cover;
 import entity.Product;
 import entity.User;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.ConsumerFacade;
+import session.CoverFacade;
 import session.ProductFacade;
 
 /**
@@ -31,12 +33,15 @@ import session.ProductFacade;
     "/editProduct",
     "/editProductForm",
     "/editList",
+    "/uploadForm",
 })
 public class ManagerServlet extends HttpServlet {
     @EJB
     private ProductFacade productFacade;
     @EJB
     private ConsumerFacade consumerFacade;
+    @EJB
+    private CoverFacade coverFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -71,6 +76,8 @@ public class ManagerServlet extends HttpServlet {
         String path = request.getServletPath();
         switch(path){
             case "/addProduct":
+                    List<Cover> listCovers = coverFacade.findAll();
+                    request.setAttribute("listCovers", listCovers);
                     request.getRequestDispatcher("/WEB-INF/addProduct.jsp").forward(request, response);
                     break;
             case "/createProduct":
@@ -80,6 +87,7 @@ public class ManagerServlet extends HttpServlet {
                 String videocard = request.getParameter("videocard");
                 String ram = request.getParameter("ram");
                 String cpu = request.getParameter("cpu");
+                String coverId = request.getParameter("coverId");
                 if("".equals(name) || name == null 
                         || "".equals(videocard) || videocard == null
                         || "".equals(ram) || ram == null
@@ -93,10 +101,13 @@ public class ManagerServlet extends HttpServlet {
                     request.setAttribute("videocard",videocard);
                     request.setAttribute("ram",ram);
                     request.setAttribute("cpu",cpu);
+                    request.setAttribute("coverId",coverId);
                     request.getRequestDispatcher("/addProduct").forward(request, response);
                     break; 
                 }
-                Product product = new Product(name, Integer.parseInt(price), Integer.parseInt(quantity), videocard, ram, cpu);
+                
+                Cover cover = coverFacade.find(Long.parseLong(coverId));
+                Product product = new Product(name, Integer.parseInt(price), Integer.parseInt(quantity), videocard, ram, cpu, cover);
                 productFacade.create(product);
                 request.setAttribute("info","Добавлен товар: " +product.toString() );
                 request.getRequestDispatcher("/main").forward(request, response);
@@ -109,6 +120,8 @@ public class ManagerServlet extends HttpServlet {
                 break;
                 
             case "/editProductForm":
+                listCovers = coverFacade.findAll();
+                request.setAttribute("listCovers", listCovers);
                 String productId = request.getParameter("productId");
                 product = productFacade.find(Long.parseLong(productId));
                 request.setAttribute("name",product.getName());
@@ -158,7 +171,11 @@ public class ManagerServlet extends HttpServlet {
                 request.getRequestDispatcher("/main").forward(request, response);
                 break;
         
-        }        
+            case "/uploadForm":
+                request.getRequestDispatcher("/WEB-INF/uploadForm.jsp").forward(request, response);
+                break;  
+                
+        }     
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
