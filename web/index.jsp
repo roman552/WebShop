@@ -17,11 +17,11 @@
                                                           <h5 class="card-title">${product.name}</h5>
                                                           <p class="card-text">
                                                           <form id="1" action="buyProduct" method="POST">    
-                                                                Цена: ${product.price}$
-                                                                Количество: ${product.quantity}
-                                                                Видеокарта: ${product.videocard}
-                                                                CPU: ${product.cpu}
-                                                                Оперативная память: ${product.ram}
+                                                                Цена: ${product.price}$<br>
+                                                                Количество: ${product.quantity}<br>
+                                                                Видеокарта: ${product.videocard}<br>
+                                                                CPU: ${product.cpu}<br>
+                                                                Оперативная память: ${product.ram}<br>
                                                                 <input class="d-none" type="text" name="productId" value="${product.id}">
                                                           </p>
                                                           <div class="d-flex justify-content-between">

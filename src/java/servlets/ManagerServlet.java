@@ -109,7 +109,7 @@ public class ManagerServlet extends HttpServlet {
                 Cover cover = coverFacade.find(Long.parseLong(coverId));
                 Product product = new Product(name, Integer.parseInt(price), Integer.parseInt(quantity), videocard, ram, cpu, cover);
                 productFacade.create(product);
-                request.setAttribute("info","Добавлен товар: " +product.toString() );
+                request.setAttribute("info","Добавлен товар: " +product.getName() );
                 request.getRequestDispatcher("/main").forward(request, response);
                 break;
               

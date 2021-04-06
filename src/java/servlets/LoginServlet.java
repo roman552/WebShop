@@ -126,22 +126,22 @@ public class LoginServlet extends HttpServlet {
             case "/createConsumer":
                 String firstname = request.getParameter("firstname");
                 String lastname = request.getParameter("lastname");
-                String cash = request.getParameter("cash");
+                
                 login = request.getParameter("login");
                 password = request.getParameter("password");
                 if("".equals(firstname) || firstname == null 
                         || "".equals(lastname) || lastname == null
                         || "".equals(login) || login == null
                         || "".equals(password) || password == null
-                        || "".equals(cash) || cash == null){
+                        ){
                     request.setAttribute("info","Заполните все поля формы");
                     request.setAttribute("firstname",firstname);
                     request.setAttribute("lastname",lastname);
-                    request.setAttribute("cash",cash);
+                    
                     request.getRequestDispatcher("/WEB-INF/addConsumer.jsp").forward(request, response);
                     break; 
                 }
-                Consumer consumer = new Consumer(firstname, lastname, Integer.parseInt(cash));
+                Consumer consumer = new Consumer(firstname, lastname, 0);
                 consumerFacade.create(consumer);
                 UserRole userRole = roleFacade.findByName("CONSUMER");
                 

@@ -10,7 +10,7 @@
                                         <form action="setRoleToUser" method="POST" autocomplete="off" class="form-block">
                                             <select name="userId" multiple="true">
                                                 <c:forEach var="user" items="${listUsers}">
-                                                    <option value="${user.getId()}">${user.getId()}. ${user.getUser().getFirstName()} ${user.getUser().getLastName()}</option>
+                                                    <option value="${user.getId()}">${user.getId()}. ${user.getUser().getFirstName()} ${user.getUser().getLastName()} ${user.getRole().getRoleName()}</option>
                                                 </c:forEach>
                                             </select>
                                             <select name="roleId" multiple="true">

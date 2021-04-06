@@ -12,7 +12,7 @@
                                         <form action="createConsumer" method="POST" autocomplete="off" class="form-block">
                                             Имя: <input type="text" name="firstname" class="form-input" value="${firstname}"><br>
                                             Фамилия: <input type="text" name="lastname" class="form-input" value="${lastname}"><br>
-                                            Деньги: <input type="text" name="cash" class="form-input" value="${cash}"><br>
+                                            
                                             Логин: <input type="text" name="login" class="form-input" value="${login}"><br>
                                             Пароль: <input type="password" name="password" class="form-input" value=""><br>
                                             <input type="submit" class="form-input" value="добавить">

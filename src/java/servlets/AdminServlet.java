@@ -91,11 +91,27 @@ public class AdminServlet extends HttpServlet {
                 
                 if("".equals(userId) || userId == null 
                         || "".equals(roleId) || roleId == null) {
+                    users = userFacade.findAll();
+                    request.setAttribute("listUsers", users);
+                    roles = roleFacade.findAll();
+                    request.setAttribute("listRoles", roles);
                     request.setAttribute("info","Заполните все поля формы");
                     request.getRequestDispatcher("/WEB-INF/adminPanel.jsp").forward(request, response);
+                    break;
                 }
                 
                 user = userFacade.find(Long.parseLong(userId));
+                
+                if(user.getId()==1){
+                    users = userFacade.findAll();
+                    request.setAttribute("listUsers", users);
+                    roles = roleFacade.findAll();
+                    request.setAttribute("listRoles", roles);
+                    request.setAttribute("info","нельзя поменять роль выбранному пользователю");
+                    request.getRequestDispatcher("/WEB-INF/adminPanel.jsp").forward(request, response);
+                    break;
+                }
+                
                 UserRole role = roleFacade.find(Long.parseLong(roleId));
                 
                 
