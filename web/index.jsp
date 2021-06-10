@@ -5,12 +5,12 @@
 --%>
 
 
-        <h1>Список компьютеров</h1>
+        <h1 style="padding: 15px">Список компьютеров</h1>
                         <hr>
-                        <p>${info}</p>
+                        <p style="color: red; font-weight: bold">${info}</p>
                                     <div class="row">
                                         <c:forEach var="product" items="${listProducts}">
-                                        <div class="col-4 mt-3">
+                                        <div class="col-3 mt-3">
                                                 <div class="card" style="width: 18rem;">
                                                     <img src="insertFile/${product.cover.path}" class="card-img-top" alt="...">
                                                     <div class="card-body">

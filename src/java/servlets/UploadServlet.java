@@ -66,7 +66,7 @@ public class UploadServlet extends HttpServlet {
             return;
         }
         
-        String uploadFolder = "E:";
+        String uploadFolder = "D:";
         List<Part> fileParts = request
                .getParts()
                .stream()
@@ -76,7 +76,7 @@ public class UploadServlet extends HttpServlet {
        for(Part filePart : fileParts){
            sb.append(uploadFolder)
              .append(File.separator)
-             .append("images")
+             .append("Ivanov SPTVR19")
              .append(File.separator)
              .append(getFileName(filePart));
            File file = new File(sb.toString());

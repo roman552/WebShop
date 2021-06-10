@@ -12,12 +12,14 @@
         <title>Вход в аккаунт</title>
     </head>
     <body>
-        <h1>Вход в аккаунт</h1>
-        <p>${info}</p>
-        <form action="login" method="POST" autocomplete="off">
-            Логин: <input type="text" name="login" value="${login}"><br>
-            Пароль: <input type="password" name="password" value=""><br>
-            <input type="submit" value="Войти">
-        </form>
+        <div style="margin-top: 5%; text-align: center; min-height: 500px; min-width: 500px; background-color: #282828; color: white; display: flex; align-items: center; justify-content: center; flex-direction: column">
+            <h1><i>Войдите в аккаунт</i></h1>
+            <p>${info}</p>
+            <form action="login" method="POST" autocomplete="off">
+                Логин: <input style="background-color: #282828; color: white; border: 1px solid white; border-radius: 20px" type="text" name="login" value="${login}"><br><br>
+                Пароль: <input style="background-color: #282828; color: white; border: 1px solid white; border-radius: 20px" type="password" name="password" value=""><br><br>
+                <input style="background-color: #282828; color: white; border: 1px solid white; width: 250px; height: 50px; margin-top: 5%;" type="submit" value="Войти">
+            </form>
+        </div>
     </body>
 </html>

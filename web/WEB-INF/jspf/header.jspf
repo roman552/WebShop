@@ -18,7 +18,10 @@
                 
             
         	.sidebar {
-        		min-height: 600px;
+        		min-height: 1000px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center
         	}
 
         	.login-form {
@@ -27,6 +30,7 @@
         		width: 80%;
         		border-radius: 35px;
         		padding: 20px;
+                        
         	}
                 .user-panel {
         		background-color: #fff;
@@ -104,10 +108,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand logo" href='main'><i class="bi bi-laptop"></i>Магазин компьютеров</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <a class="navbar-brand logo" href='main' style="margin-left: 10px"><i class="bi bi-laptop"></i>Магазин компьютеров</a>
                 
             </div>
         </nav>
@@ -117,7 +118,7 @@
                     <div class="col-md-3 sidebar bg-dark" >
                         <div class="login-form <c:if test="${not empty user}">d-none</c:if>">
                             <h1>Вход</h1><hr size="5px">
-                            <i>${info}</i>   
+                            <i style="color: red">${info}</i>   
                             <form action="login" class="d-flex flex-column justify-content-center" method="POST">
                                 <b>Логин: </b><input id="login" type="text" name="login" autocomplete="off" value="${login}"><br>
                                 <b>Пароль: </b><input id="password" type="password" name="password" value=""><br>
