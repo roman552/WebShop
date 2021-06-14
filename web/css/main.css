@@ -1,0 +1,108 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14.06.2021, 8:54:56
+    Author     : user
+*/
+
+.logo {
+    transition: transform .6s ease;
+    font-size: 35px
+}
+
+.logo:hover {transform: scaleX(1.04)}
+
+
+.sidebar {
+        min-height: 1000px;
+        display: flex;
+        flex-direction: column;
+        align-items: center
+}
+
+.login-form {
+        background-color: #fff;
+        margin-top: 55px;
+        width: 80%;
+        border-radius: 35px;
+        padding: 20px;
+
+}
+.user-panel {
+        background-color: #fff;
+        margin-top: 55px;
+        width: 80%;
+        border-radius: 35px;
+        padding: 20px;
+}
+
+.form-block {
+    border-radius: 25px;
+    background-color: dodgerblue;
+    padding: 15px;
+    width: 50%;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+}
+
+.form-input {
+    margin-top: 10px;
+    background-color: azure;
+    border: 0px;
+    border-radius: 15px;  
+    transition: all .4s ease-in-out;
+}
+
+.form-input:hover {
+    background-color: honeydew;
+    transform: scaleX(1.03)
+}
+
+
+input[type='submit'].form-input {
+    background-color: bisque;
+    height: 40px;
+    transition: all .5s ease-in-out;
+}
+
+input[type='submit'].form-input:hover {
+    background-color: beige;
+    transform: scaleX(1.05)
+
+}
+
+.more1 {
+        position: absolute; 
+        padding: 15px; 
+        left: 0; top: 0;
+        width: 120px;
+        background-color: #E1E1E1; 
+        border-radius: 20px;
+        display: none;
+        z-index: 2;
+
+}
+
+a {
+        color: black;
+}
+
+
+.more:hover .more1{
+        display: flex;
+        justify-content: center;
+        align-items: center 
+
+}
+
+.nav-el{color: black}
+
+.nav-el-active {color: #756AFF; font-weight: bold}

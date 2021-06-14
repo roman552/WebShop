@@ -175,7 +175,7 @@ public class LoginServlet extends HttpServlet {
             case "":
                 listProducts = productFacade.findAll();
                 request.setAttribute("listProducts", listProducts); 
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("index.html").forward(request, response);
                 break;        
                 
         }

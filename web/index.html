@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>web shop</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="css/main.css"/>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand logo" href='main' style="margin-left: 10px"><i class="bi bi-laptop"></i>Магазин компьютеров</a>
+                
+            </div>
+        </nav>
+        <main>  
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3 sidebar bg-dark" >
+                        <div class="login-form">
+                            <h1>Вход</h1><hr size="5px">
+                            <i style="color: red">${info}</i>   
+                            <form action="login" class="d-flex flex-column justify-content-center" method="POST">
+                                <b>Логин: </b><input id="login" type="text" name="login" autocomplete="off" value="${login}"><br>
+                                <b>Пароль: </b><input id="password" type="password" name="password" value=""><br>
+                                <input id="submit" type="submit" value="Войти">
+                            </form>
+                            <hr>
+                            <h5>Нет аккаунта? <a href="addConsumer">Зарегистрироваться</a></h5>
+                        </div>
+                        <div class="user-panel">
+                            <h2 id="loginInfo">Привет, ${login} !</h2><hr>
+                                <h4>Навигация</h4>
+                                <ul class="list-unstyled">
+                                    <a href='#addMoneyToConsumer' class="nav-el" id="addMoneyToConsumer"><li>Пополнить баланс</li></a>
+                                    <a href='#addProduct' class="nav-el" id="addProduct"><li>Добавить товар</li></a>
+                                    <a href='#editList' class="nav-el" id="editList"><li>Изменить товар</li></a>
+                                    <a href='#listConsumers' class="nav-el" id="listConsumers"><li>Список покупателей</li></a>
+                                    <a href='#adminPanel' class="nav-el" id="adminPanel"><li>Панель администратора</li></a>
+                                    <a href='#logout' class="nav-el" id="logout"><li>Выйти</li></a>
+                                </ul>
+
+                                <div style="background-color: #756AFF; color: white; padding: 5px; border-radius: 15px">Ваш баланс: $${cash}</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>  
+        <div style="background-color: #000; display: flex; align-items: center; justify-content: center; color: white; height: 250px">
+            <h1>=)</h1>
+        </div>
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <script src="js/App.js" type="module"></script>
+    </body>
+</html>
